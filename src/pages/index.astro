@@ -1,21 +1,136 @@
 ---
+import { getCollection } from 'astro:content';
 import BaseHead from '../components/BaseHead.astro';
 import Footer from '../components/Footer.astro';
+import FormattedDate from '../components/FormattedDate.astro';
 import Header from '../components/Header.astro';
-import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
+import { AUTHOR_NAME, AUTHOR_ROLE, SITE_DESCRIPTION, SITE_TITLE } from '../consts';
+
+const posts = (await getCollection('blog')).sort(
+	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
+);
+const recent = posts.slice(0, 3);
 ---
 
 <!doctype html>
 <html lang="en">
 	<head>
 		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+		<style>
+			.hero {
+				padding: 2.5em 0 1.5em;
+				border-bottom: 1px solid rgb(var(--line));
+			}
+			.hero h1 {
+				margin: 0.35em 0 0.3em;
+				font-size: 2.9em;
+			}
+			.tagline {
+				font-size: 1.2em;
+				color: rgb(var(--muted));
+				max-width: 34em;
+			}
+			.cta {
+				margin-top: 1.6em;
+				display: flex;
+				gap: 0.8em;
+				flex-wrap: wrap;
+			}
+			.button {
+				display: inline-block;
+				padding: 0.6em 1.2em;
+				border-radius: 8px;
+				font-weight: 700;
+				font-size: 0.95rem;
+				text-decoration: none;
+			}
+			.button.primary {
+				background: var(--accent);
+				color: #06281c;
+			}
+			.button.primary:hover {
+				background: #6ee7b7;
+				text-decoration: none;
+			}
+			.button.ghost {
+				border: 1px solid rgb(var(--line));
+				color: rgb(var(--ink));
+			}
+			.button.ghost:hover {
+				border-color: var(--accent);
+				text-decoration: none;
+			}
+			section {
+				padding: 2em 0 0.5em;
+			}
+			.post-list {
+				list-style: none;
+				margin: 1.2em 0 0;
+				padding: 0;
+			}
+			.post-list li {
+				padding: 1.1em 0;
+				border-bottom: 1px solid rgb(var(--line));
+				margin: 0;
+			}
+			.post-list a {
+				display: block;
+				text-decoration: none;
+			}
+			.post-list h3 {
+				margin: 0 0 0.2em;
+			}
+			.post-list a:hover h3 {
+				color: var(--accent-dark);
+			}
+			.post-list .date {
+				font-family: var(--mono);
+				font-size: 0.8rem;
+				color: rgb(var(--muted));
+				margin: 0;
+			}
+			.post-list .desc {
+				margin: 0.3em 0 0;
+				font-size: 0.95em;
+				color: rgb(var(--muted));
+			}
+			.byline {
+				margin-top: 2.5em;
+				font-size: 0.95em;
+			}
+		</style>
 	</head>
 	<body>
 		<Header />
 		<main>
-			<h1>Security Notes</h1>
-			<p>Notes on application security and penetration testing.</p>
-			<p><a href="/blog">Read the posts</a></p>
+			<div class="hero">
+				<p class="eyebrow">Application security · Penetration testing</p>
+				<h1>{SITE_TITLE}</h1>
+				<p class="tagline">{SITE_DESCRIPTION}</p>
+				<div class="cta">
+					<a class="button primary" href="/blog">Read the blog</a>
+					<a class="button ghost" href="/about">About</a>
+				</div>
+			</div>
+			{recent.length > 0 && (
+				<section>
+					<h2>Latest posts</h2>
+					<ul class="post-list">
+						{recent.map((post) => (
+							<li>
+								<a href={`/blog/${post.id}/`}>
+									<p class="date"><FormattedDate date={post.data.pubDate} /></p>
+									<h3>{post.data.title}</h3>
+									<p class="desc">{post.data.description}</p>
+								</a>
+							</li>
+						))}
+					</ul>
+				</section>
+			)}
+			<p class="byline muted">
+				Written by <a href="/about">{AUTHOR_NAME}</a>, {AUTHOR_ROLE.toLowerCase()} — from real, authorized engagements.
+			</p>
 		</main>
 		<Footer />
 	</body>
