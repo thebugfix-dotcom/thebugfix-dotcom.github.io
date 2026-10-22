@@ -1,0 +1,55 @@
+---
+import BaseHead from '../components/BaseHead.astro';
+import Footer from '../components/Footer.astro';
+import Header from '../components/Header.astro';
+import { AUTHOR_NAME, LINKEDIN_URL, SITE_TITLE } from '../consts';
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<BaseHead title="About" description={`About ${AUTHOR_NAME} and ${SITE_TITLE}.`} />
+		<style>
+			h1 {
+				margin-top: 0.3em;
+			}
+			.topics {
+				margin: 0.4em 0 1em;
+			}
+		</style>
+	</head>
+	<body>
+		<Header />
+		<main>
+			<p class="eyebrow">$ whoami</p>
+			<h1>{AUTHOR_NAME}</h1>
+			<p>
+				I'm a penetration tester based in Israel with about seven years of experience
+				testing applications, infrastructure, mobile apps, and cloud environments.
+				Before going independent, I spent years at Comsec, a security consultancy,
+				working on authorized engagements for clients of all sizes.
+			</p>
+			<p>
+				{SITE_TITLE} is where I write up what that work teaches me: how common attacks
+				actually work, what they look like in logs, and how to test for them safely.
+				The goal is always the same — practical notes a defender or a fellow tester
+				can use the same day they read them.
+			</p>
+			<h2>What you'll find here</h2>
+			<ul class="topics">
+				<li>Attack techniques explained at a conceptual level, with references</li>
+				<li>Detection notes: what to look for in logs and alerts</li>
+				<li>Safe testing guidance for authorized engagements</li>
+			</ul>
+			<p>
+				Everything published here describes testing on systems I was authorized to
+				test, or on my own lab. No client names, no customer data, no shortcuts.
+			</p>
+			<p>
+				The best place to reach me is
+				<a href={LINKEDIN_URL} target="_blank" rel="noopener noreferrer">LinkedIn</a>.
+			</p>
+		</main>
+		<Footer />
+	</body>
+</html>

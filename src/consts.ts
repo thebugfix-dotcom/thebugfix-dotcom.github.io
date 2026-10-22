@@ -1,5 +1,10 @@
-// Place any global data in this file.
-// You can import this data from anywhere in your site by using the `import` keyword.
+// Global site data.
 
-export const SITE_TITLE = 'Security Notes';
-export const SITE_DESCRIPTION = 'Notes on application security and penetration testing.';
+export const SITE_TITLE = 'The Bug Fix';
+export const SITE_DESCRIPTION =
+	'Practical notes on penetration testing and application security.';
+export const AUTHOR_NAME = 'Ahron Moshe';
+export const AUTHOR_ROLE = 'Penetration tester';
+export const LINKEDIN_URL =
+	'https://www.linkedin.com/in/ahron-moshe-944674a1/';
+export const GITHUB_URL = 'https://github.com/thebugfix-dotcom';
